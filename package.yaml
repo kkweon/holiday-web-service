@@ -1,7 +1,7 @@
 name: holiday-service
 version: 0.1.0.0
 github: 'kkweon/holiday-service'
-license: MIT
+license: GPLv3
 author: 'Kyung Mo Kweon'
 maintainer: 'kkweon@gmail.com'
 copyright: '2019 Kyung Mo Kweon'
