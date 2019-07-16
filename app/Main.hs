@@ -8,6 +8,6 @@ import System.Environment (lookupEnv)
 
 main :: IO ()
 main = do
-  port <- read <$> fromMaybe "8080" <$> lookupEnv "port"
+  port <- read <$> fromMaybe "8080" <$> lookupEnv "PORT"
   putStrLn $ "Running a server " ++ (show port)
   run port Lib.app
