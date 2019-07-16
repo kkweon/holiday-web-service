@@ -2,7 +2,7 @@ module Country
   ( Country(USA, Korea)
   , parseCountry
   , koreaTimeZone
-  , getKoreanDay
+  , getKoreaDay
   , getUsaDay
   ) where
 
@@ -37,8 +37,8 @@ parseCountry text =
       | countryName `Set.member` usaNames = Just USA
       | otherwise = Nothing
 
-getKoreanDay :: IO Time.Day
-getKoreanDay = do
+getKoreaDay :: IO Time.Day
+getKoreaDay = do
   Time.LocalTime koreaDay _ <-
     Time.utcToLocalTime koreaTimeZone <$> Time.getCurrentTime
   return koreaDay

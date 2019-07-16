@@ -21,7 +21,7 @@ app = Linklater.slashSimple f
       if country == Country.Korea
         then do
           h <- getKoreaHoliday
-          koreaDay <- Country.getKoreanDay
+          koreaDay <- Country.getKoreaDay
           return $ Service.formatHoliday koreaDay h
         else do
           h <- getUsaHoliday
@@ -42,7 +42,7 @@ getUsaHoliday = do
 
 getKoreaHoliday :: IO Service.Holiday
 getKoreaHoliday = do
-  koreaDay <- Country.getKoreanDay
+  koreaDay <- Country.getKoreaDay
   case Service.getNearestHoliday koreaDay Country.Korea of
     Just h -> return h
     Nothing -> fail "Unable to find any holiday in Korea"
