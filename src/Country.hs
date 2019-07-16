@@ -1,5 +1,5 @@
 module Country
-  ( Country (USA, Korea)
+  ( Country(USA, Korea)
   , parseCountry
   , koreaTimeZone
   , getKoreanDay
@@ -37,15 +37,14 @@ parseCountry text =
       | countryName `Set.member` usaNames = Just USA
       | otherwise = Nothing
 
-
-
 getKoreanDay :: IO Time.Day
 getKoreanDay = do
-    Time.LocalTime koreaDay _ <- Time.utcToLocalTime koreaTimeZone <$> Time.getCurrentTime
-    return koreaDay
+  Time.LocalTime koreaDay _ <-
+    Time.utcToLocalTime koreaTimeZone <$> Time.getCurrentTime
+  return koreaDay
 
 getUsaDay :: IO Time.Day
 getUsaDay = do
-    let tz = read "PST"
-    Time.LocalTime usaDay _ <- Time.utcToLocalTime tz <$> Time.getCurrentTime
-    return usaDay
+  let tz = read "PST"
+  Time.LocalTime usaDay _ <- Time.utcToLocalTime tz <$> Time.getCurrentTime
+  return usaDay

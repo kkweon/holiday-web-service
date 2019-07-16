@@ -3,7 +3,7 @@ module Holiday.ServiceSpec where
 import Holiday.Service
 import Test.Hspec
 
-import qualified Country as Country
+import qualified Country
 import qualified Data.Time as Time
 
 spec :: Spec

@@ -41,4 +41,5 @@ getNearestHoliday day Korea = do
 formatHoliday :: Time.Day -> Holiday -> Text
 formatHoliday beg (Holiday day name) =
   let diff = Time.diffDays day beg -- day - beg
-   in T.pack $ unwords [name, "(" ++ show day ++ ",", show diff ++ " days left" ++ ")"]
+   in T.pack $
+      unwords [name, "(" ++ show day ++ ",", show diff ++ " days left" ++ ")"]
