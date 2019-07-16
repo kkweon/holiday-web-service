@@ -2,6 +2,8 @@ module Country
   ( Country (USA, Korea)
   , parseCountry
   , koreaTimeZone
+  , getKoreanDay
+  , getUsaDay
   ) where
 
 import Data.Char (toLower)
@@ -9,7 +11,7 @@ import Data.List.Extra (trim)
 
 import Data.Set (Set)
 import qualified Data.Set as Set
-import qualified Data.Time.LocalTime as Time
+import qualified Data.Time as Time
 
 data Country
   = Korea
@@ -34,3 +36,16 @@ parseCountry text =
       | countryName `Set.member` koreaNames = Just Korea
       | countryName `Set.member` usaNames = Just USA
       | otherwise = Nothing
+
+
+
+getKoreanDay :: IO Time.Day
+getKoreanDay = do
+    Time.LocalTime koreaDay _ <- Time.utcToLocalTime koreaTimeZone <$> Time.getCurrentTime
+    return koreaDay
+
+getUsaDay :: IO Time.Day
+getUsaDay = do
+    let tz = read "PST"
+    Time.LocalTime usaDay _ <- Time.utcToLocalTime tz <$> Time.getCurrentTime
+    return usaDay

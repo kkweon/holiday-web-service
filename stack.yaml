@@ -42,6 +42,8 @@ packages:
 # extra-deps: []
 extra-deps:
   - korea-holidays-0.1.0.4
+  - usa-holidays-0.1.0.1
+  - linklater-4.0.0.2
 # Override default flag values for local packages and extra-deps
 # flags: {}
 

@@ -1,7 +1,7 @@
 name: holiday-service
 version: 0.1.0.0
 github: 'kkweon/holiday-service'
-license: GPLv3
+license: GPL-3
 author: 'Kyung Mo Kweon'
 maintainer: 'kkweon@gmail.com'
 copyright: '2019 Kyung Mo Kweon'
@@ -25,6 +25,11 @@ dependencies:
   - extra
   - time
   - korea-holidays
+  - usa-holidays
+  - linklater
+  - wai
+  - warp
+  - text
 
 library:
   source-dirs: src
