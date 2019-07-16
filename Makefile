@@ -55,3 +55,9 @@ format:
 .PHONY: test
 test:
 	stack test --pedantic
+
+
+## Install the app (needed for Heroku)
+.PHONY: install
+install:
+	stack build --copy-bins
