@@ -5,6 +5,7 @@ module Lib
   ) where
 
 import qualified Country
+import qualified Data.Time as Time
 import qualified Holiday.Service as Service
 import qualified Network.Linklater as Linklater
 import qualified Network.Wai as Wai
@@ -17,32 +18,28 @@ app = Linklater.slashSimple f
   where
     f :: Linklater.Command -> IO Text
     f (Linklater.Command "holiday" _ _ (Just text)) = do
-      country <- liftMaybe $ Country.parseCountry (T.unpack text)
-      if country == Country.Korea
-        then do
-          h <- getKoreaHoliday
-          koreaDay <- Country.getKoreaDay
-          return $ Service.formatHoliday koreaDay h
-        else do
-          h <- getUsaHoliday
-          usaDay <- Country.getUsaDay
-          return $ Service.formatHoliday usaDay h
+      let country = Country.parseCountry (T.unpack text)
+      case country of
+        Just Country.Korea -> buildHoliday getKoreaHoliday Country.getKoreaDay
+        Just Country.USA -> buildHoliday getUsaHoliday Country.getUsaDay
+        _ -> return "Only USA and KOREA are supported at the moment."
+      where
+        buildHoliday :: IO Service.Holiday -> IO Time.Day -> IO Text
+        buildHoliday ioHoliday ioDay = do
+          h <- ioHoliday
+          d <- ioDay
+          return . Service.formatHoliday d $ h
     f _ = return ""
 
-liftMaybe :: Maybe a -> IO a
-liftMaybe (Just a) = return a
-liftMaybe Nothing = fail "No value"
+getHoliday :: IO Time.Day -> Country.Country -> IO Service.Holiday
+getHoliday ioDay country = do
+  day <- ioDay
+  case Service.getNearestHoliday day country of
+    Just h -> return h
+    Nothing -> fail $ "No holiday found in " ++ show country
 
 getUsaHoliday :: IO Service.Holiday
-getUsaHoliday = do
-  usaDay <- Country.getUsaDay
-  case Service.getNearestHoliday usaDay Country.USA of
-    Just h -> return h
-    Nothing -> fail "Unable to find any holiday in the U.S"
+getUsaHoliday = getHoliday Country.getUsaDay Country.USA
 
 getKoreaHoliday :: IO Service.Holiday
-getKoreaHoliday = do
-  koreaDay <- Country.getKoreaDay
-  case Service.getNearestHoliday koreaDay Country.Korea of
-    Just h -> return h
-    Nothing -> fail "Unable to find any holiday in Korea"
+getKoreaHoliday = getHoliday Country.getKoreaDay Country.Korea

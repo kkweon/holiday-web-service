@@ -37,14 +37,16 @@ parseCountry text =
       | countryName `Set.member` usaNames = Just USA
       | otherwise = Nothing
 
-getKoreaDay :: IO Time.Day
-getKoreaDay = do
-  Time.LocalTime koreaDay _ <-
-    Time.utcToLocalTime koreaTimeZone <$> Time.getCurrentTime
-  return koreaDay
+-- | Get current date in given tz.
+getTzDay :: Time.TimeZone -> IO Time.Day
+getTzDay tz = do
+  Time.LocalTime day _ <- Time.utcToLocalTime tz <$> Time.getCurrentTime
+  return day
 
+-- | Get date in Korea.
+getKoreaDay :: IO Time.Day
+getKoreaDay = getTzDay koreaTimeZone
+
+-- | Get date in the U.S.
 getUsaDay :: IO Time.Day
-getUsaDay = do
-  let tz = read "PST"
-  Time.LocalTime usaDay _ <- Time.utcToLocalTime tz <$> Time.getCurrentTime
-  return usaDay
+getUsaDay = getTzDay (read "PST")
