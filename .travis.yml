@@ -1,40 +1,23 @@
-# This is the simple Travis configuration, which is intended for use
-# on applications which do not require cross-platform and
-# multiple-GHC-version support. For more information and other
-# options, see:
-#
-# https://docs.haskellstack.org/en/stable/travis_ci/
-#
-# Copy these contents into the root directory of your Github project in a file
-# named .travis.yml
-
-# Choose a build environment
-dist: xenial
-
-# Do not choose a language; we provide our own build tools.
+dist: bionic
 language: generic
-
-# Caching so the next build will be fast too.
 cache:
   directories:
-  - $HOME/.stack
-
-# Ensure necessary system libraries are present
+  - "$HOME/.stack"
 addons:
   apt:
     packages:
-      - libgmp-dev
+    - libgmp-dev
+  sonarcloud:
+    organization: "kkweon"
+    token:
+      secure: CCnUEWMAHDrulQu+Rct6jmuDLHqZvqYY9kyKb0LDcyQsPa3j/+41x7QZWcczPqsArbH2U6ChJNbCZv3kAbc9yLgLEZTXAiFkhSXxjxe8RuwvWCXqvbQC06hy16Vd6ikId46fD3GNYZuS8moBwEki1F0ksPJ86zKoYKXL9jBACwf2jsx9EO4vu79Qurf0pArovG4JnO1H9jKCTYfDzE4rnpnMNjmLUoT8CMjNE8d6f7HDOi73F7num6R3zRgu5tmeECQEMvs1WDDdFZkjRkIXm8d39NDCEAqv8ku26EvghDqJ8QBGpVuswMX5vGPwUF3LLgXYHdC39cDJwnD+OUz8fxhCEJ5nC4qpdSzVA5mpiSwzs4VefC318d7cQX7wyWA/3AXbfQhJcI67Zr0mTn8T/6jsiOCm/OTQiyBJ2EkQcvo+j6k6DqK/J58q75eBZys+EDWi2DePpHtOYiVAgwr2ce7lVems/dXRUfEAiDGHSd77VabfhB4TT3HNlMjgu2SC2Qe9Q1eX1U45R93UngRwu7KsjCo71RUYhgsFNKFpLgzReoWdjyjejSdh7wW6rU5+saRamj2Y8/E6bQZoZhNJTMMDGNYKbcFsR+o/CWbW4bS0AJhG5vlyOlLQvFnEkQdB4DKB2BSOb1OpIZyBW/B8Cp1P7ZFIIH0E0Au2razkJdU=
 
 before_install:
-# Download and unpack the stack executable
 - mkdir -p ~/.local/bin
 - export PATH=$HOME/.local/bin:$PATH
 - travis_retry curl -L https://get.haskellstack.org/stable/linux-x86_64.tar.gz | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
-
 install:
-# Build dependencies
 - stack --no-terminal --install-ghc test --only-dependencies
-
 script:
-# Build the package, its tests, and its docs and run the tests
 - stack --no-terminal test --haddock --no-haddock-deps
+- sonar-scanner
