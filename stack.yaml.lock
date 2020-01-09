@@ -12,12 +12,12 @@ packages:
   original:
     hackage: korea-holidays-0.1.0.4
 - completed:
-    hackage: usa-holidays-0.1.0.1@sha256:6d7744a2579e0b7abb6582d82220c08fafaf771de8e42a1a4c9dc7c93796fe9a,1672
+    hackage: usa-holidays-0.1.0.2@sha256:08d219112a8d06259f4b26bea825e798f8f8b0a61d5f851966a6a9c36ebf2262,1672
     pantry-tree:
       size: 444
-      sha256: 1eaf1c03a66625d2cf4331388d205ea80425c192cc35f6eaf7c46489af5513d5
+      sha256: 76222a8331d15b27d3fff3d80ced549a5f2aafb932510cdab09878ee5dc59061
   original:
-    hackage: usa-holidays-0.1.0.1
+    hackage: usa-holidays-0.1.0.2
 - completed:
     hackage: linklater-4.0.0.2@sha256:c4d21b2ed782b6ca5fa69cdca244d60c2470cd82bf2ddd620e3e948619745609,1719
     pantry-tree:
